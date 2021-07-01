@@ -13,7 +13,10 @@
 
         <action
             android:id="@+id/action_FirstFragment_to_testeDeTela2"
-            app:destination="@id/testeDeTela2" />
+            app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_adicionarPalavra"
+            app:destination="@id/adicionarPalavra" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -24,14 +27,38 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_perdeuJogo"
+            app:destination="@id/perdeuJogo" />
+        <action
+            android:id="@+id/action_SecondFragment_to_ganhouJogo"
+            app:destination="@id/ganhouJogo" />
     </fragment>
     <fragment
-        android:id="@+id/testeDeTela2"
-        android:name="com.example.jogodaforca.TesteDeTela"
-        android:label="fragment_teste_de_tela"
-        tools:layout="@layout/fragment_teste_de_tela" >
+        android:id="@+id/perdeuJogo"
+        android:name="com.example.jogodaforca.perdeuJogo"
+        android:label="fragment_perdeu_jogo"
+        tools:layout="@layout/fragment_perdeu_jogo" >
         <action
-            android:id="@+id/action_testeDeTela2_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_perdeuJogo_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ganhouJogo"
+        android:name="com.example.jogodaforca.ganhouJogo"
+        android:label="fragment_ganhou_jogo"
+        tools:layout="@layout/fragment_ganhou_jogo" >
+        <action
+            android:id="@+id/action_ganhouJogo_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adicionarPalavra"
+        android:name="com.example.jogodaforca.adicionarPalavra"
+        android:label="fragment_adicionar_palavra"
+        tools:layout="@layout/fragment_adicionar_palavra" >
+        <action
+            android:id="@+id/action_adicionarPalavra_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
