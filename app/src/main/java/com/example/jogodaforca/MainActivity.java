@@ -111,16 +111,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void escrever(String[] palavraNova){
+    public void escrever(String palavraNova, String texto){
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(getArmazenamento(true)));
-
-            int tamanho = palavraNova.length;
-            for(int i=0; i<tamanho ;i++){
-                bw.write(palavraNova[i]+"/");
-            }
-
-
+            bw.write(palavraNova + "/" + texto);
             bw.close();
         }
         catch(IOException e){
@@ -166,7 +160,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciaArquivoPadrao(){
-        escrever(palavrasPadrao);
+        int tamanho = palavrasPadrao.length;
+        for(int i=0; i<tamanho ;i++){
+            escrever(palavrasPadrao[i]+ "/", "");
+        }
     }
 
 }
