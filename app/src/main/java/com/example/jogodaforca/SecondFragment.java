@@ -22,6 +22,19 @@ public class SecondFragment extends Fragment {
     private String letrasErradas = "";
     private int tempoJogado=180;
     private int erros = 0;
+    Handler handler = new Handler();
+    Runnable r = new Runnable() {
+        @Override
+        public void run() {
+            tempoJogado-=1;
+            if(tempoJogado >=0 && erros<5){
+                binding.tempoDeJogo.setText("Tempo Restante: " + tempoJogado + " segundos");
+                timer();
+            }else {
+                finalizaJogoPerdeu();
+            }
+        }
+    };
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -41,11 +54,6 @@ public class SecondFragment extends Fragment {
             public void onClick(View view) {
                 NavHostFragment.findNavController(SecondFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
-        });
-        binding.buttonRestartJogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
             }
         });
         binding.botaoTentativaLetra.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +114,9 @@ public class SecondFragment extends Fragment {
             enforcarBoneco(erros);
             letrasErradas += Character.toLowerCase(letra);
             binding.historicoLetras.setText(letrasErradas);
-            ((MainActivity)getActivity()).criarAlert();
+            if(erros!=5){
+                ((MainActivity)getActivity()).criarAlert();
+            }
         }
     }
 
@@ -142,10 +152,12 @@ public class SecondFragment extends Fragment {
     }
     
     private void finalizaJogoPerdeu(){
+        handler.removeCallbacks(r);
        NavHostFragment.findNavController(SecondFragment.this)
                 .navigate(R.id.action_SecondFragment_to_perdeuJogo);
     }
     private void finalizaJogoGanhou(){
+        handler.removeCallbacks(r);
         NavHostFragment.findNavController(SecondFragment.this)
                 .navigate(R.id.action_SecondFragment_to_ganhouJogo);
     }
@@ -157,25 +169,9 @@ public class SecondFragment extends Fragment {
 
 
 
-
-
     public void timer()
     {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                tempoJogado-=1;
-                if(tempoJogado >=0){
-                    binding.tempoDeJogo.setText("Tempo Restante: " + tempoJogado + " segundos");
-                    timer();
-                }else {
-                    finalizaJogoPerdeu();
-                }
-            }
-        }, 1000);
+        handler.postDelayed(r, 1000);
     }
 
 

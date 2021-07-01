@@ -13,11 +13,6 @@ import android.view.ViewGroup;
 import com.example.jogodaforca.databinding.FragmentPerdeuJogoBinding;
 import com.example.jogodaforca.databinding.FragmentSecondBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link perdeuJogo#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class perdeuJogo extends Fragment {
     private FragmentPerdeuJogoBinding binding;
 
