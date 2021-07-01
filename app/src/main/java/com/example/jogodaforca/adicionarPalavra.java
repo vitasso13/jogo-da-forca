@@ -26,8 +26,12 @@ import java.io.IOException;
  * create an instance of this fragment.
  */
 public class adicionarPalavra extends Fragment {
-    Context context = this;
+    private static final String ARQUIVO = null;
+    private Object adicionarPalavra = this;
     private FragmentAdicionarPalavraBinding binding;
+    private static Context context;
+
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -48,24 +52,18 @@ public class adicionarPalavra extends Fragment {
                         .navigate(R.id.action_adicionarPalavra_to_FirstFragment);
             }
         });
-//        binding.aplicarAdicionarPalavra.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        binding.aplicarAdicionarPalavra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                  escrever();
+            }
+        });
     }
 
 
-    public void escrever(View v){
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(getArmazenamento(true)));
-            bw.write(binding.palavraNova.getText().toString());
-            bw.close();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
+    public void escrever(){
+        String texto =  ((MainActivity)getActivity()).ler();
+        ((MainActivity)getActivity()).escrever(binding.palavraNova.getText().toString(), texto);
     }
 
     public void ler(View v){
@@ -73,6 +71,7 @@ public class adicionarPalavra extends Fragment {
             BufferedReader br = new BufferedReader(new FileReader(getArmazenamento(true)));
             String texto;
             texto = br.readLine();
+//            tvResultado.setText(texto);
             br.close();
         }
         catch(IOException e){
@@ -82,12 +81,12 @@ public class adicionarPalavra extends Fragment {
 
 
 
-    public File getArmazenamento (boolean cache){
 
+    public File getArmazenamento (boolean cache){
         if (cache){
-            return new File(adicionarPalavra.getCacheDir(), ARQUIVO);
+            return new File(context.getCacheDir(), ARQUIVO);
         }else{
-            return new File(adicionarPalavra.getFilesDir(), null);
+            return new File(context.getFilesDir(),ARQUIVO);
         }
 
     }

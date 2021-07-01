@@ -22,7 +22,6 @@ import java.io.IOException;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    private static final String ARQUIVO = "memoria_interna.txt";
     private final String palavrasPadrao[]= {"pressa", "maroto","solene","herege","embora","buscar","quanto","danado","acesso","axioma"};
     private String palavrasArquivo[] ={};
     @Override
@@ -60,40 +59,40 @@ public class FirstFragment extends Fragment {
         binding = null;
     }
 
-    public void escrever(View v){
-        try{
-            BufferedWriter bw = new BufferedWriter(new FileWriter(getArmazenamento(true)));
-            bw.write(etTexto.getText().toString());
-            bw.close();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void ler(View v){
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(getArmazenamento(true)));
-            String texto;
-            texto = br.readLine();
-            tvResultado.setText(texto);
-            br.close();
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-    public File getArmazenamento (boolean cache){
-        if (cache){
-            return new File(getCacheDir(), ARQUIVO);
-        }else{
-            return new File(getFilesDir(),ARQUIVO);
-        }
-
-    }
+//    public void escrever(View v){
+//        try{
+//            BufferedWriter bw = new BufferedWriter(new FileWriter(getArmazenamento(true)));
+//            bw.write(binding.palav.getText().toString());
+//            bw.close();
+//        }
+//        catch(IOException e){
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void ler(View v){
+//        try{
+//            BufferedReader br = new BufferedReader(new FileReader(getArmazenamento(true)));
+//            String texto;
+//            texto = br.readLine();
+//            tvResultado.setText(texto);
+//            br.close();
+//        }
+//        catch(IOException e){
+//            e.printStackTrace();
+//        }
+//    }
+//
+//
+//
+//
+//    public File getArmazenamento (boolean cache){
+//        if (cache){
+//            return new File(getCacheDir(), ARQUIVO);
+//        }else{
+//            return new File(getFilesDir(),ARQUIVO);
+//        }
+//
+//    }
 
 }

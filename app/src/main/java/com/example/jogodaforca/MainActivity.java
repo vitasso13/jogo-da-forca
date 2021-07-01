@@ -3,11 +3,7 @@ package com.example.jogodaforca;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,15 +15,23 @@ import com.example.jogodaforca.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
+    private static final String ARQUIVO = "memoria_interna.txt";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getArmazenamento(true);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -78,5 +82,44 @@ public class MainActivity extends AppCompatActivity {
         dialog.setTitle("Você Errou");
         dialog.setPositiveButton("tente novamente", null);
         dialog.show();
+    }
+
+
+    public void escrever(String palavraNova, String textoAntigo){
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(getArmazenamento(true)));
+
+            bw.append(palavraNova);
+            bw.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public String ler(){
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(getArmazenamento(true)));
+            String texto;
+            texto = br.readLine();
+            br.close();
+            return texto;
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+    public File getArmazenamento (boolean cache){
+        if (cache){
+            return new File(getCacheDir(), ARQUIVO);
+        }else{
+            return new File(getFilesDir(),ARQUIVO);
+        }
+
     }
 }
