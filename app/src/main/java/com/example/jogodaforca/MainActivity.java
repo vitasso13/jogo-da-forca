@@ -3,6 +3,25 @@ package com.example.jogodaforca;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.example.jogodaforca.databinding.ActivityMainBinding;
+
+import android.view.Menu;
+import android.view.MenuItem;
+
+import android.app.AlertDialog;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
@@ -18,6 +37,7 @@ import android.view.MenuItem;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,13 +47,19 @@ public class MainActivity extends AppCompatActivity {
     private static final String ARQUIVO = "memoria_interna.txt";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private final String palavrasPadrao[]= {"pressa", "maroto","solene","herege","embora","buscar","quanto","danado","acesso","axioma"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getArmazenamento(true);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if(!verificaArquivo()){
+            iniciaArquivoPadrao();
+        }
+
 
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -85,11 +111,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void escrever(String palavraNova, String textoAntigo){
+    public void escrever(String[] palavraNova){
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(getArmazenamento(true)));
 
-            bw.append(palavraNova);
+            int tamanho = palavraNova.length;
+            for(int i=0; i<tamanho ;i++){
+                bw.write(palavraNova[i]+"/");
+            }
+
+
             bw.close();
         }
         catch(IOException e){
@@ -114,12 +145,28 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public File getArmazenamento (boolean cache){
-        if (cache){
+    public File getArmazenamento (boolean cache) {
+        if (cache) {
             return new File(getCacheDir(), ARQUIVO);
-        }else{
-            return new File(getFilesDir(),ARQUIVO);
+        } else {
+            return new File(getFilesDir(), ARQUIVO);
         }
 
     }
+    public boolean verificaArquivo(){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(getArmazenamento(true)));
+            //verificar conteudo
+            return true;
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void iniciaArquivoPadrao(){
+        escrever(palavrasPadrao);
+    }
+
 }
