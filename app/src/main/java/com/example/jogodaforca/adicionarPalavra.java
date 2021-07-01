@@ -27,7 +27,6 @@ import java.io.IOException;
  */
 public class adicionarPalavra extends Fragment {
     private static final String ARQUIVO = null;
-    private Object adicionarPalavra = this;
     private FragmentAdicionarPalavraBinding binding;
     private static Context context;
 
